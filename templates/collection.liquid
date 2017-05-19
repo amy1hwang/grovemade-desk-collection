@@ -1,0 +1,66 @@
+<!-- /templates/collection.liquid -->
+{% comment %}
+
+  For more information on collection tags:
+    - http://docs.shopify.com/themes/liquid-variables/collection
+
+{% endcomment %}
+
+
+  <div class="banner" style="background-image: url('{{ collection.image | img_url: "1100x" }}')">
+  </div>
+{% if collection.handle == 'all' %}
+  {% for link in linklists.collections.links %}
+    {% assign collection = link.object %}
+    {% include 'collection-single' %}
+  {% endfor %}
+{% else %}
+  <center>
+  	<div class="container">
+  		<div class="row">
+  			<div class="col-xs-12">
+  				<h1 class="collection-title font-din">
+  					{{ collection.title }}
+				</h1>
+				<p class="collection-desc font-georgia">
+					{{ collection.description }}
+				</p>
+  			</div>
+  		</div>
+  	</div>
+  </center>
+  {% if collection.handle == 'desk' %}
+    <!-- This is the desk hard coded content! -->
+  {% endif %}
+  <div class="video-wrapper">
+    <div class="video-container">
+      {% include 'collection-video' %}
+    </div>
+  </div>
+
+  <div class="collection-group container margin">
+    <div class="row">
+      {% for product in collection.products %}
+        {% assign title_lower = collection.title | downcase %}
+        <div class="
+          collection-image
+          {% if title_lower contains 'accessories' %}
+            col-xs-3
+          {% else %}
+            col-xs-4
+          {% endif %}
+        ">
+          <a class="product" href="{{ product.url | within: collection }}">
+            <img class="collection-group__image" src="{{ product.images[0] | img_url: '500x' }}" />
+            <div class="collection-group__image-hover">
+              <img src="{{ product.images[1] | img_url: '500x' }}" />
+            </div>
+            <p class="font-din product-title">{{ product.title }}</p>
+            <p class="font-din product-price">{{ product.price | money }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endif %}

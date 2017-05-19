@@ -1,0 +1,25 @@
+<nav class="header">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-11">
+        <a class="logo" href="/">
+          <img class="navbarlogo" src="{{ 'dclogo.svg' | asset_url }}" alt="">
+          <img class="fixedbarlogo" src="{{ 'fixedbarlogo.svg' | asset_url }}" alt="">
+        </a>
+          <a class="font-din show-superbar nav-item">
+            View Collection
+            <img src="{{ 'v.svg' | asset_url}}" alt="" class="arrow-down">
+          </a>
+          <a class="font-din nav-item" href="/pages/about">
+            About
+          </a>
+      </div>
+      <div class="cart-container col-xs-1">
+        <div class="navbar-cart" onclick="window.location = '/cart/';">
+          <img src="{{ 'cart.svg' | asset_url }}" alt="">
+          <h1 class="font-din number-of-items">{{ cart.item_count }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

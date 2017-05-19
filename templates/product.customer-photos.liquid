@@ -1,0 +1,10 @@
+{% for image in product.images %}
+  <img src="{{ image | img_url: "300x" }}"/>
+  Person: {{ image.alt }}<br>
+  <div class="popup">
+    <img src="{{ image | img_url: "300x" }}"/>
+    Person: {{ image.alt }}<br>
+    First: {{ image.alt | split: "//" | first }}<br>
+    Last: {{ image.alt | split: "//" | last }}
+  </div>
+{% endfor %}

@@ -1,0 +1,24 @@
+
+<div class="shop-all-cover">
+  <h1 class="text-on-cover font-din">SHOP</h1>
+  <h2 class="text-on-cover-smaller font-din">ALL PRODUCTS</h2>
+</div>
+
+{% for collection in collections %}
+  {% unless collection.handle == 'frontpage' %}
+    {% capture collection_title %}{{ collection.title | escape }}{% endcapture %}
+
+    <div class="section-header">
+      <h2 class="section-header__left font-din">{{ collection_title }}</p>
+    </div>
+
+    <div class="grid-uniform">
+      {% for product in collection.products limit:5 %}
+        {% assign grid_item_width = 'large--one-fifth medium--one-half' %}
+        {% include 'product-grid-item' %}
+      {% endfor %}
+    </div>
+
+    {% unless forloop.last %}<hr>{% endunless %}
+  {% endunless %}
+{% endfor %}

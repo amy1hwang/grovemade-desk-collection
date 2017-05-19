@@ -1,0 +1,82 @@
+
+<h2 itemprop="name">{{ product.title }}</h2>
+<span id="ProductPrice" itemprop="price" content="{{ current_variant.price | divided_by: 100.00 }}">
+  {{ current_variant.price | money }}
+</span>
+<br><br>
+<div class="product-description rte" itemprop="description">
+  {{ product.description }}
+</div>
+
+{% comment %}
+  ID addToCartForm is a selector for the ajax cart plugin
+{% endcomment %}
+<form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" class="form-vertical">
+
+  {% comment %}
+    Add product variants as a dropdown.
+      - By default, each variant (or combination of variants) will display as its own <option>
+      - To separate these into multiple steps, which we suggest, use option_selection.js (see below)
+
+    You can leverage jQuery to add a callback on page load and each time the select element changes:
+      - Include option_selection.js (as seen at the bottom of this file)
+      - This allows you to use JavaScript anytime the variant dropdown changes
+      - This also separates out your variant options (ie. size, color, etc.) to separate select elements
+
+    For more information on products with multiple options, visit:
+      - http://docs.shopify.com/support/your-website/themes/can-i-make-my-theme-use-products-with-multiple-options#update-product-liquid
+  {% endcomment %}
+  <select name="id" id="productSelect" class="product-single__variants">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+
+        {% comment %}
+          Note: if you use option_selection.js, your <select> tag will be overwritten, meaning what you have inside <option> will not reflect what you coded below.
+        {% endcomment %}
+        <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  {% if product.compare_at_price_max > product.price %}
+    <span class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+    <p id="ComparePrice">
+      {{ 'products.product.compare_at' | t }} {{ current_variant.compare_at_price | money }}
+    </p>
+  {% endif %}
+  <div style="display: none;">
+    <label for="Quantity" class="quantity-selector">{{ 'products.product.quantity' | t }}</label>
+    <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+  </div>
+  <button type="submit" name="add" id="AddToCart" class="style-button style-button--dark">
+    <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+  </button>
+</form>
+
+
+
+{% comment %}
+  If the user is on a collection product page (ie with /collections/collection-handle/products/product-handle)
+  in the URL, we can show next/previous links to other products in the collection.
+{% endcomment %}
+{% if collection %}
+  {% if collection.previous_product or collection.next_product %}
+    <div class="product-navigation">
+      {% if collection.previous_product %}
+        <span class="left">
+          {{ 'products.general.previous_product_html' | t | link_to: collection.previous_product }}
+        </span>
+      {% endif %}
+      {% if collection.next_product %}
+        <span class="right">
+          {{ 'products.general.next_product_html' | t | link_to: collection.next_product }}
+        </span>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endif %}

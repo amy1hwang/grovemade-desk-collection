@@ -1,0 +1,44 @@
+{% if collection.handle == 'desk' %}
+  <!-- This is the desk hard coded content! -->
+{% endif %}
+
+<div class="collection-group container margin">
+  <div class="row collection-group-first-row">
+    <div class="col-sm-9">
+      <a href="{{ link.url }}">
+        <h2 class="collection-group__title font-din">
+          {{ collection.title }}
+        </h2>
+        {% include 'collection-desc' %}
+      </a>
+    </div>
+    <div class="col-sm-3">
+      {% include 'collection-bullets' %}
+    </div>
+  </div>
+  <!-- /row -->
+
+
+  <div class="row">
+    {% for product in collection.products %}
+      {% assign title_lower = collection.title | downcase %}
+      <div class="
+        collection-image
+        {% if title_lower contains 'accessories' %}
+          col-xs-3
+        {% else %}
+          col-xs-4
+        {% endif %}
+      ">
+        <a class="product" href="{{ product.url | within: collection }}">
+          <img class="collection-group__image" src="{{ product.images[0] | img_url: '500x' }}" />
+          <div class="collection-group__image-hover">
+            <img src="{{ product.images[1] | img_url: '500x' }}" />
+          </div>
+          <p class="font-din product-title">{{ product.title }}</p>
+          <p class="font-din product-price">{{ product.price | money }}</p>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
