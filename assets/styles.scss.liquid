@@ -7,6 +7,10 @@ li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 //variables
 $hdr-gray: #424242;
 $ftr-gray: #4a4d51;
@@ -93,13 +97,6 @@ $din: "din-2014";
   margin-bottom: 40px;
 }
 
-// utility classes
-// utility classes
-// utility classes
-// utility classes
-
-
-
 
 //general
 body {
@@ -139,7 +136,7 @@ main.main-content {
 }
 
 .fixedbarlogo {
-  transition: all 1s ease-in-out;
+  transition: all .5s ease-in-out;
   opacity: 0;
 }
 
@@ -606,6 +603,13 @@ main.main-content {
     color: white;
     display: inline-block;
     margin-right: 20px;
+    a {
+      color: inherit;
+      text-decoration: none;
+      &:visited {
+        color: white;
+      }
+    }
   }
 }
 .b-right {
