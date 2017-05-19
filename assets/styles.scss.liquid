@@ -370,12 +370,14 @@ main.main-content {
   h1 {
     color: white;
     font-size: 4em;
+    cursor: default;
   }
   p {
     text-align: center;
     width: 60%;
     color: white;
     font-size: 1.4em;
+    cursor: default;
   }
   button {
     position: absolute;
@@ -391,6 +393,7 @@ main.main-content {
     @include wu(.8px, 1em, 600);
     color: $ftr-gray;
     transition: all .2s ease-in-out;
+    cursor: pointer;
     &:hover, &:focus, &:active {
       outline: none;
     }
@@ -771,6 +774,9 @@ main.main-content {
 }
 
 .collection-group__list {
+  ul, li {
+  cursor: default;
+}
   li {
     font-size: 1.2em;
     color: lighten($hdr-gray, 50%);
